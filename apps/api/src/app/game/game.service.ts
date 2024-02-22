@@ -14,7 +14,7 @@ type Type<T> = new (...args: any[]) => T;
 export class GameService implements OnApplicationShutdown {
   constructor(private readonly auth: AuthService) {}
 
-  server: Server = null as any;
+  server!: Server;
 
   createServer(httpServer: http.Server) {
     if (this.server) return;
