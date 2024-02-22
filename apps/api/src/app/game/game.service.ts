@@ -1,6 +1,7 @@
 import * as http from 'http';
 
 import { Room, Server } from '@colyseus/core';
+import { Type } from '@colyseus/core/build/utils/types';
 import { WebSocketTransport } from '@colyseus/ws-transport';
 import { Injectable, Logger, OnApplicationShutdown } from '@nestjs/common';
 
@@ -8,13 +9,11 @@ import { AuthService } from '../auth';
 
 const logger = new Logger('GameService');
 
-type Type<T> = new (...args: any[]) => T;
-
 @Injectable()
 export class GameService implements OnApplicationShutdown {
   constructor(private readonly auth: AuthService) {}
 
-  server: Server = null as any;
+  server!: Server;
 
   createServer(httpServer: http.Server) {
     if (this.server) return;
@@ -24,7 +23,7 @@ export class GameService implements OnApplicationShutdown {
     });
   }
 
-  defineRoom(name: string, room: Type<Room<any, any>>) {
+  defineRoom(name: string, room: Type<Room>) {
     return this.server.define(name, room, { auth: this.auth });
   }
 

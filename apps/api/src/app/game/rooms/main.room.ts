@@ -7,16 +7,12 @@ import { AuthService } from '../../auth';
 const logger = new Logger('MainRoom');
 
 export class MainRoom extends Room<MyRoomState> {
-  auth: AuthService = null as any;
+  auth!: AuthService;
   boxData = {
     targetId: null,
     position: null,
     quaternion: null,
   };
-
-  constructor() {
-    super();
-  }
 
   onCreate(options: any) {
     this.auth = options.auth;
