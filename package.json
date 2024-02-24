@@ -14,7 +14,7 @@
     "gen:colyseus": "rimraf apps/zen-unity/Assets/Scripts/Colyseus/Generated/ && schema-codegen libs/common/src/lib/game-schema/room-state.ts --output apps/zen-unity/Assets/Scripts/Colyseus/Generated/ --csharp --namespace Zen.Colyseus",
     "prisma:migrate": "prisma migrate dev --schema apps/api/prisma/schema.prisma && ts-node --project tools/tsconfig.json tools/generate.ts",
     "prisma:studio": "prisma studio --schema apps/api/prisma/schema.prisma",
-    "dev:unity": "nx build zen-unity",
+    "dev:unity": "nx build zen-unity --skip-nx-cache",
     "prod:unity": "nx build zen-unity --prod",
     "prod:portal": "nx build portal --prod",
     "prod:api": "nx build api --prod && docker build -f deploy/api/Dockerfile -t zen-api .",
