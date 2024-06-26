@@ -97,7 +97,7 @@ export const typeDefs = gql`
 
 @Resolver()
 @UseGuards(GqlThrottlerGuard)
-@Throttle({ default: { limit: 5, ttl: 30_000 } })
+@Throttle({ default: { limit: 10, ttl: 30_000 } })
 export class AuthResolver {
   constructor(
     private readonly auth: AuthService,
@@ -123,7 +123,7 @@ export class AuthResolver {
       },
     });
 
-    if (!user) throw new HttpException(ApiError.AuthLogin.USER_NOT_FOUND, 400);
+    if (!user) throw new HttpException(ApiError.Codes.USER_NOT_FOUND, 400);
 
     const correctPassword = await bcryptVerify({
       password: args.password,
@@ -142,7 +142,7 @@ export class AuthResolver {
       select: { username: true, password: true, googleProfile: true },
     });
 
-    if (!user) throw new UnauthorizedException('User not found');
+    if (!user) throw new UnauthorizedException(ApiError.Codes.USER_NOT_FOUND);
 
     return {
       username: user.username,
@@ -165,7 +165,7 @@ export class AuthResolver {
     if (user) {
       return this.auth.getAuthSession(user, args.rememberMe);
     } else {
-      throw new UnauthorizedException('User not found');
+      throw new UnauthorizedException(ApiError.Codes.USER_NOT_FOUND);
     }
   }
 
@@ -192,8 +192,7 @@ export class AuthResolver {
       select: { id: true, email: true },
     });
 
-    if (possibleUsers.length === 0)
-      throw new HttpException(ApiError.AuthPasswordResetRequest.USER_NOT_FOUND, 400);
+    if (possibleUsers.length === 0) throw new HttpException(ApiError.Codes.USER_NOT_FOUND, 400);
 
     possibleUsers.forEach(user => this.mail.sendPasswordReset(user));
   }
@@ -204,14 +203,14 @@ export class AuthResolver {
     try {
       tokenPayload = this.jwtService.verify(args.token);
     } catch {
-      throw new UnauthorizedException('JWT failed verification');
+      throw new UnauthorizedException(ApiError.AuthPasswordResetConfirmation.JWT_FAILED);
     }
 
     const userExists = await this.prisma.user.findUnique({
       where: { id: tokenPayload.sub },
       select: { id: true },
     });
-    if (!userExists) throw new UnauthorizedException('User not found');
+    if (!userExists) throw new UnauthorizedException(ApiError.Codes.USER_NOT_FOUND);
 
     const hashedPassword = await this.hashPassword(args.newPassword);
 
@@ -295,7 +294,7 @@ export class AuthResolver {
       },
     });
 
-    if (!user) throw new UnauthorizedException('User not found');
+    if (!user) throw new UnauthorizedException(ApiError.Codes.USER_NOT_FOUND);
 
     const correctPassword = await bcryptVerify({
       password: args.oldPassword,
@@ -314,9 +313,13 @@ export class AuthResolver {
 
   private async hashPassword(password: string) {
     return bcrypt({
-      costFactor: this.config.bcryptCost,
+      // @default 12 bytes
+      costFactor: this.config.bcrypt?.costFactor ? this.config.bcrypt.costFactor : 12,
       password,
-      salt: crypto.getRandomValues(new Uint8Array(16)),
+      salt: crypto.getRandomValues(
+        // @default 16 bytes
+        new Uint8Array(this.config.bcrypt?.saltSize ? this.config.bcrypt.saltSize : 16)
+      ),
     });
   }
 }

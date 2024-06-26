@@ -2,14 +2,14 @@
   "name": "zen-unity",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "apps/zen-unity",
+  "sourceRoot": "apps/zen-unity/quantum_unity",
   "targets": {
     "build": {
       "executor": "@zen/nx-unity-plugin:build",
       "options": {
         "configuration": "Debug",
         "executeMethod": "Builder.BuildWebGLDevelopment",
-        "unityProjectPath": "apps/zen-unity",
+        "unityProjectPath": "apps/zen-unity/quantum_unity",
         "outputPath": "apps/portal/src/assets/unity"
       },
       "configurations": {
@@ -28,8 +28,8 @@
       "options": {
         "verifyNoChanges": true,
         "projects": [
-          "apps/zen-unity/Assembly-CSharp-Editor.csproj",
-          "apps/zen-unity/Assembly-CSharp.csproj"
+          "apps/zen-unity/quantum_unity/Assembly-CSharp-Editor.csproj",
+          "apps/zen-unity/quantum_unity/Assembly-CSharp.csproj"
         ]
       }
     },
@@ -37,8 +37,8 @@
       "executor": "@zen/nx-unity-plugin:format",
       "options": {
         "projects": [
-          "apps/zen-unity/Assembly-CSharp-Editor.csproj",
-          "apps/zen-unity/Assembly-CSharp.csproj"
+          "apps/zen-unity/quantum_unity/Assembly-CSharp-Editor.csproj",
+          "apps/zen-unity/quantum_unity/Assembly-CSharp.csproj"
         ]
       }
     },
@@ -46,8 +46,8 @@
       "executor": "@zen/nx-unity-plugin:generate-graphql",
       "options": {
         "schema": "http://localhost:7080/graphql",
-        "outputPath": "apps/zen-unity/Assets/Scripts/GraphQL/Generated",
-        "documents": "apps/zen-unity/Assets/Scripts/**/*.graphql",
+        "outputPath": "apps/zen-unity/quantum_unity/Assets/Scripts/GraphQL/Generated",
+        "documents": "apps/zen-unity/quantum_unity/Assets/Scripts/**/*.graphql",
         "namespaceName": "Zen.GraphQL",
         "overwrite": true,
         "scalars": { "DateTime": "DateTime", "Json": "object", "Upload": "object" }

@@ -7,7 +7,7 @@ Zen is a starter kit to build web portals as a stateful single-page application.
 Specifically, this is an [Nx](https://nx.dev/) integrated monorepo, utilizing [Angular](https://angular.io/) for the frontend, [Nest](https://nestjs.com/) for the backend, and [Prisma](https://www.prisma.io/) for the data persistence solution.
 [Apollo](https://www.apollographql.com/) is deeply integrated throughout the entire tech stack, enabling for a modern approach to communication between the client and the server via GraphQL.
 
-The project implements a fully featured authentication & authorization system with a minimalistic implementation.  This includes a login component, registration component, password change component and a fully featured password reset flow.  All of this while only having 1 model in the `schema.prisma` file, the `User` model. Guards & directives are also integrated for both [RBAC](https://docs.nestjs.com/guards#role-based-authentication) & [ABAC](https://casl.js.org/v6/en/guide/intro) authorization schemes and can be used in conjunction.  Everything needed for a malleable and robust user management system has been wired up for you.
+The project implements a fully featured authentication & authorization system with a minimalistic implementation.  This includes a login component, registration component, password change component and a fully featured password reset flow.  All of this while only having 1 model within the `schema.prisma` file, the `User` model. Guards & directives are also integrated for both [RBAC](https://docs.nestjs.com/guards#role-based-authentication) & [ABAC](https://casl.js.org/v6/en/guide/intro) authorization schemes and can be used in conjunction.  Everything needed for a malleable and robust user management system has been wired up for you.
 
 ## Key Features
 
@@ -43,7 +43,7 @@ The project implements a fully featured authentication & authorization system wi
 - [Node v20](https://nodejs.org/)
 - [Docker](https://www.docker.com/) or [Rancher Desktop](https://rancherdesktop.io/)
 
-We are utilizing pnpm as our package manager.  Though, you can utilize npm if you prefer by simply deleting the `pnpm-lock.yaml` file and running the equivalent npm commands.
+We are utilizing pnpm as our package manager.  Though, you can utilize npm if you prefer by running the equivalent npm commands.
 
 ```bash
 # Project setup steps
@@ -127,13 +127,11 @@ pnpm start
 - [x] [OpenTelemetry](https://opentelemetry.io/) branch demonstrates how to integrate and expose telemetry data for the API server.
 - [x] HTML canvas branch demonstrating integration of [babylon.js](https://www.babylonjs.com/) & [Fabric.js](http://fabricjs.com/).
 - [x] Internationalization branch with all text extracted into JSON files ready to be translated. [@ngx-translate](https://github.com/ngx-translate/core) was chosen over [@angular/localize](https://angular.io/api/localize) due to @angular/localize inability to change languages at runtime.
-- [x] Unity branch demonstrating how to fully integrate a [Colyseus](https://colyseus.io/) game server as a Nest app and a [Unity WebGL](https://docs.unity3d.com/2023.3/Documentation/Manual/webgl-intro.html) web player as an Angular component.
-  * The payload for the Unity app is currently weighing in at approximately ~130MB uncompressed.  Though, the payload can be reduced substantially by utilizing brotli compression.
-  * A [glTF loader](https://github.com/vrm-c/UniVRM) has been integrated into the Unity URP 3D project.  Enabling the ability to load in fully textured `.glb` models and scenes dynamically at runtime.
-  * A [VRM loader](https://github.com/vrm-c/UniVRM) has been integrated to load VRM avatars that fit the Unity Humanoid Rig.
-  * Custom Nx scripts have been integrated to generate C# GraphQL types for communicating with the API server via GraphQL.  Furthermore, Colyseus types are also code generated from the Colyseus schema.  This enables end-to-end typings for the entire monorepo.  As with everything else for this project, TypeScript has been chosen as the scripting language of choice.  Triggering events from JavaScript is trivial with Unity WebGL projects.  HTML and CSS can be utilized for overlaying a UI on top of the HTML canvas hosting the Unity app, making it simple to integrate high quality UIs for your web game.
-  * The user management system has been unified across the entire monorepo and thus simplifies the creation of unique user experiences as a real-time web application.  This starter kit now has the ability to render real-time scenes and load in models dynamically at runtime for individual users via Unity's Addressable system.  It has never been easier to create exceptional enterprise grade metaverse experiences that are wired up to your own fleet of game servers delivering content on-demand.
-  * A project management tool and game engine like Unity is necessary for complex projects that scales well as the number of team members grows.  Unity is continuing to invest heavily into the web and has recently integrated experimental support for the new WebGPU standard that is nearing completion in being fully codified.  We can now utilize Compute Shaders to tap into the massive parallelization power of the GPU.  Unity VFX can now be utilized to create high quality effects on the web.
+- [x] Unity branch demonstrating how to compile a [Unity WebGL](https://docs.unity3d.com/2023.3/Documentation/Manual/webgl-intro.html) web player as an Angular component.
+  * The payload for the Unity app is currently weighing in at ~109MB uncompressed and ~12.8MB compressed with brotli.
+  * Custom Nx scripts have been integrated to generate C# GraphQL types for communicating with the API server via GraphQL.  This enables end-to-end typings.
+  * The user management system has been unified across the entire monorepo and thus simplifies the creation of unique user experiences as a real-time web application.  This starter kit now has the ability to render real-time scenes and load in models dynamically at runtime via Unity's Addressable system.  It has never been easier to create exceptional enterprise grade metaverse experiences that are wired up to your own fleet of game servers delivering content on-demand.
+  * A project management tool and game engine like Unity is necessary for complex projects that scales well as the number of team members grows.  Unity is continuing to invest heavily into the web and has recently integrated experimental support for the new WebGPU standard that is nearing completion in being fully standardized.  This enables utilizing Compute Shaders to tap into the massive parallelization power of the GPU.
   * The development experience is exquisite via the included recommended set of VSCode extensions and Unity as an Nx C# project.  Making for a cross-platform development experience that is extraordinarily simple to set up and maintain.
 
 ---

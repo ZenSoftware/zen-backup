@@ -4,7 +4,7 @@
 /apps/**/prisma/generated/
 /uploads/
 /apps/portal/src/assets/unity/
-/apps/zen-unity_clone*
+/apps/zen-unity/quantum_unity_clone*
 
 # compiled output
 dist
@@ -45,4 +45,5 @@ testem.log
 Thumbs.db
 
 .nx/cache
+.nx/workspace-data
 .angular
